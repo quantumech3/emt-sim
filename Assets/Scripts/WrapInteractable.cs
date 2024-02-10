@@ -37,25 +37,28 @@ public class WrapInteractable : XRBaseInteractable
 
     private void Update()
     {
-        lineRenderer.enabled = shouldDrawLine;
-        if (shouldDrawLine)
+        if (interactor != null)
         {
-            lineRenderer.SetPosition(0, interactor.transform.position);
-            lineRenderer.SetPosition(1, transform.position);
-        }
+            lineRenderer.enabled = shouldDrawLine;
+            if (shouldDrawLine)
+            {
+                lineRenderer.SetPosition(0, interactor.transform.position);
+                lineRenderer.SetPosition(1, transform.position);
+            }
 
-        theta = transform.position - interactor.transform.position;
-        dtheta = Vector3.SignedAngle(_theta, theta, transform.up);
-        _theta = theta;
+            theta = transform.position - interactor.transform.position;
+            dtheta = Vector3.SignedAngle(_theta, theta, transform.up);
+            _theta = theta;
         
-        int_dtheta += dtheta;
+            int_dtheta += dtheta;
 
-        text.text = int_dtheta.ToString();
+            text.text = int_dtheta.ToString();
 
-        // 5 rotations and your done applying the gause
-        if (int_dtheta >= 360 * 5)
-        {
-            gause.GetComponent<MeshRenderer>().enabled = true;
+            // 5 rotations and your done applying the gause
+            if (int_dtheta >= 360 * 5)
+            {
+                gause.GetComponent<MeshRenderer>().enabled = true;
+            }
         }
     }
 }
